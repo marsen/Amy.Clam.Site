@@ -1,13 +1,11 @@
 import { prisma } from '@/infrastructure/prisma/client'
 import { RevenueChart } from './RevenueChart'
 
-function getWeekRange() {
+function getDefaultRange() {
   const now = new Date()
-  const day = now.getDay()
-  const monday = new Date(now)
-  monday.setDate(now.getDate() - (day === 0 ? 6 : day - 1))
-  monday.setHours(0, 0, 0, 0)
-  return { from: monday.toISOString().slice(0, 10), to: now.toISOString().slice(0, 10) }
+  const from = new Date(now)
+  from.setDate(now.getDate() - 29)
+  return { from: from.toISOString().slice(0, 10), to: now.toISOString().slice(0, 10) }
 }
 
 export default async function ReportsPage({
@@ -16,7 +14,7 @@ export default async function ReportsPage({
   searchParams: Promise<{ from?: string; to?: string }>
 }) {
   const { from: qFrom, to: qTo } = await searchParams
-  const defaultRange = getWeekRange()
+  const defaultRange = getDefaultRange()
   const from = qFrom ?? defaultRange.from
   const to = qTo ?? defaultRange.to
 
