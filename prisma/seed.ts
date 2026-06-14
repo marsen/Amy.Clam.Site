@@ -59,7 +59,7 @@ async function main() {
         pickupTime: o.time,
         status: o.status ?? OrderStatus.PENDING,
         totalAmount,
-        weatherSnapshot: JSON.stringify({ temp: +(25 + Math.random() * 8).toFixed(1), description: '多雲', humidity: 70 + Math.floor(Math.random() * 20) }),
+        weatherSnapshot: JSON.parse(JSON.stringify({ temp: +(25 + Math.random() * 8).toFixed(1), description: '多雲', humidity: 70 + Math.floor(Math.random() * 20) })),
         items: {
           create: items.map(({ product, qty }) => ({
             productId: product.id,

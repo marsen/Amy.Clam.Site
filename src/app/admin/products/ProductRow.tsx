@@ -65,7 +65,7 @@ export function ProductRow({ product, onUpdatePrice, onToggleActive }: Props) {
           className={`text-xs px-3 py-1 rounded-full font-medium ${
             product.isActive
               ? 'bg-green-100 text-green-700 hover:bg-green-200'
-              : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
           }`}
         >
           {product.isActive ? '上架中' : '已下架'}

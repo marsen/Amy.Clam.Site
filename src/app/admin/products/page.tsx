@@ -24,9 +24,9 @@ export default async function ProductsPage() {
         <table className="w-full text-sm">
           <thead className="bg-gray-50 border-b">
             <tr>
-              <th className="text-left px-4 py-3 font-medium text-gray-600">商品名稱</th>
-              <th className="text-left px-4 py-3 font-medium text-gray-600">價格（元）</th>
-              <th className="text-left px-4 py-3 font-medium text-gray-600">狀態</th>
+              <th className="text-left px-4 py-3 font-medium text-gray-800">商品名稱</th>
+              <th className="text-left px-4 py-3 font-medium text-gray-800">價格（元）</th>
+              <th className="text-left px-4 py-3 font-medium text-gray-800">狀態</th>
               <th className="px-4 py-3" />
             </tr>
           </thead>

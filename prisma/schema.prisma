@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -28,7 +28,7 @@ model Order {
   pickupTime      String
   status          OrderStatus    @default(PENDING)
   totalAmount     Int
-  weatherSnapshot String?
+  weatherSnapshot Json?
   createdAt       DateTime       @default(now())
 
   items OrderItem[]

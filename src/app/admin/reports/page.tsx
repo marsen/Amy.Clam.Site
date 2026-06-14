@@ -74,27 +74,27 @@ export default async function ReportsPage({
 
       {/* 總營收 */}
       <div className="bg-white rounded-xl border shadow-sm p-6 mb-6 inline-block">
-        <p className="text-sm text-gray-500">總營收</p>
+        <p className="text-sm text-gray-700">總營收</p>
         <p className="text-4xl font-bold mt-1">${totalRevenue.toLocaleString()}</p>
       </div>
 
       {/* 折線圖 */}
       {dailyRevenue.length > 0 && (
         <div className="bg-white rounded-xl border shadow-sm p-6 mb-6">
-          <h2 className="text-sm font-medium text-gray-600 mb-4">每日營收</h2>
+          <h2 className="text-sm font-medium text-gray-800 mb-4">每日營收</h2>
           <RevenueChart data={dailyRevenue} />
         </div>
       )}
 
       {/* 商品彙總 */}
       <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
-        <h2 className="text-sm font-medium text-gray-600 px-4 py-3 border-b bg-gray-50">各商品銷售</h2>
+        <h2 className="text-sm font-medium text-gray-800 px-4 py-3 border-b bg-gray-50">各商品銷售</h2>
         <table className="w-full text-sm">
           <thead className="bg-gray-50 border-b">
             <tr>
-              <th className="text-left px-4 py-2 font-medium text-gray-600">商品名稱</th>
-              <th className="text-right px-4 py-2 font-medium text-gray-600">數量</th>
-              <th className="text-right px-4 py-2 font-medium text-gray-600">小計</th>
+              <th className="text-left px-4 py-2 font-medium text-gray-800">商品名稱</th>
+              <th className="text-right px-4 py-2 font-medium text-gray-800">數量</th>
+              <th className="text-right px-4 py-2 font-medium text-gray-800">小計</th>
             </tr>
           </thead>
           <tbody className="divide-y">

@@ -59,13 +59,13 @@ export default async function OrdersPage({
         <table className="w-full text-sm">
           <thead className="bg-gray-50 border-b">
             <tr>
-              <th className="text-left px-4 py-3 font-medium text-gray-600">訂單編號</th>
-              <th className="text-left px-4 py-3 font-medium text-gray-600">姓名</th>
-              <th className="text-left px-4 py-3 font-medium text-gray-600">電話</th>
-              <th className="text-left px-4 py-3 font-medium text-gray-600">取貨地點</th>
-              <th className="text-left px-4 py-3 font-medium text-gray-600">取貨時間</th>
-              <th className="text-left px-4 py-3 font-medium text-gray-600">金額</th>
-              <th className="text-left px-4 py-3 font-medium text-gray-600">狀態</th>
+              <th className="text-left px-4 py-3 font-medium text-gray-800">訂單編號</th>
+              <th className="text-left px-4 py-3 font-medium text-gray-800">姓名</th>
+              <th className="text-left px-4 py-3 font-medium text-gray-800">電話</th>
+              <th className="text-left px-4 py-3 font-medium text-gray-800">取貨地點</th>
+              <th className="text-left px-4 py-3 font-medium text-gray-800">取貨時間</th>
+              <th className="text-left px-4 py-3 font-medium text-gray-800">金額</th>
+              <th className="text-left px-4 py-3 font-medium text-gray-800">狀態</th>
               <th className="px-4 py-3" />
             </tr>
           </thead>

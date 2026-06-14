@@ -40,12 +40,13 @@ export async function POST(req: NextRequest) {
   }
 
   // 取得天氣快照
-  let weatherSnapshot: string | null = null
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let weatherSnapshot: any = null
   try {
     const res = await fetch(`${process.env.NEXTAUTH_URL ?? 'http://localhost:3000'}/api/weather`)
     const data = await res.json()
     const w = pickupLocation === 'SHINDIAN' ? data.shindian : data.neihu
-    if (w) weatherSnapshot = JSON.stringify({ ...w, location: pickupLocation })
+    if (w) weatherSnapshot = { ...w, location: pickupLocation }
   } catch { /* 不阻斷下單 */ }
 
   const productMap = new Map(products.map(p => [p.id, p]))
