@@ -52,7 +52,7 @@ export default function LoginPage() {
                 required
                 autoFocus
                 placeholder="admin@example.com"
-                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent placeholder:text-gray-300"
+                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent placeholder:text-gray-400"
               />
             </div>
             <div>
@@ -64,7 +64,7 @@ export default function LoginPage() {
                 type="password"
                 required
                 placeholder="••••••••"
-                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent placeholder:text-gray-300"
+                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent placeholder:text-gray-400"
               />
             </div>
 

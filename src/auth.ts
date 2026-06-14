@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
+import { compare } from 'bcryptjs'
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
@@ -9,13 +10,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        if (
-          credentials.email === process.env.ADMIN_EMAIL &&
-          credentials.password === process.env.ADMIN_PASSWORD
-        ) {
-          return { id: '1', email: credentials.email as string }
-        }
-        return null
+        const email = credentials.email as string
+        const password = credentials.password as string
+
+        if (email !== process.env.ADMIN_EMAIL) return null
+
+        const hash = process.env.ADMIN_PASSWORD_HASH
+        if (!hash) return null
+
+        const valid = await compare(password, hash)
+        return valid ? { id: '1', email } : null
       },
     }),
   ],
