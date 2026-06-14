@@ -138,7 +138,7 @@ export default function CheckoutPage() {
           <section className="bg-white rounded-2xl shadow-sm border border-orange-50 p-4">
             <h2 className="font-bold text-[#1A1A1A] mb-3">取貨日期與時段</h2>
             <input type="date" value={date} min={minDate} onChange={e => setDate(e.target.value)} required
-              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-[#E8622A]" />
+              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-[#1A1A1A] mb-3 focus:outline-none focus:ring-2 focus:ring-[#E8622A]" />
             <div className="grid grid-cols-4 gap-2">
               {SLOTS[location].map(slot => (
                 <button key={slot} type="button" onClick={() => setTime(slot)}
@@ -156,14 +156,14 @@ export default function CheckoutPage() {
         <section className="bg-white rounded-2xl shadow-sm border border-orange-50 p-4 space-y-3">
           <h2 className="font-bold text-[#1A1A1A]">聯絡資料</h2>
           <div>
-            <label className="text-sm text-gray-500 mb-1 block">姓名</label>
+            <label className="text-sm font-medium text-[#1A1A1A] mb-1 block">姓名</label>
             <input value={name} onChange={e => setName(e.target.value)} required placeholder="您的姓名"
-              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#E8622A]" />
+              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-[#1A1A1A] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#E8622A]" />
           </div>
           <div>
-            <label className="text-sm text-gray-500 mb-1 block">手機號碼</label>
+            <label className="text-sm font-medium text-[#1A1A1A] mb-1 block">手機號碼</label>
             <input value={phone} onChange={e => setPhone(e.target.value)} required placeholder="09xxxxxxxx"
-              type="tel" className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#E8622A]" />
+              type="tel" className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-[#1A1A1A] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#E8622A]" />
           </div>
         </section>
 
