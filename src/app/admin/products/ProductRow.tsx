@@ -28,33 +28,30 @@ export function ProductRow({ product, onUpdatePrice, onToggleActive }: Props) {
   }
 
   return (
-    <tr className="hover:bg-gray-50">
-      <td className="px-4 py-3 font-medium">{product.name}</td>
-      <td className="px-4 py-3">
+    <tr className="hover:bg-slate-50">
+      <td className="px-4 py-3 font-medium text-slate-900">{product.name}</td>
+      <td className="px-4 py-3 text-slate-800">
         {editing ? (
           <div className="flex items-center gap-2">
             <input
               type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-              className="border rounded px-2 py-1 w-24 text-sm"
+              className="border border-slate-300 rounded px-2 py-1 w-24 text-sm text-slate-900"
             />
             <button
               onClick={savePrice}
               disabled={saving}
-              className="text-xs bg-neutral-900 text-white px-3 py-1 rounded hover:bg-neutral-700 disabled:opacity-50"
+              className="text-xs bg-[#1E3A5F] text-white px-3 py-1 rounded hover:bg-[#162D4A] disabled:opacity-50"
             >
               儲存
             </button>
-            <button onClick={() => setEditing(false)} className="text-xs text-gray-400 hover:text-gray-600">
+            <button onClick={() => setEditing(false)} className="text-xs text-slate-500 hover:text-slate-700">
               取消
             </button>
           </div>
         ) : (
-          <span
-            className="cursor-pointer hover:text-blue-600"
-            onClick={() => setEditing(true)}
-          >
+          <span className="cursor-pointer hover:text-[#1E3A5F] hover:underline" onClick={() => setEditing(true)}>
             ${product.price}
           </span>
         )}
@@ -62,10 +59,10 @@ export function ProductRow({ product, onUpdatePrice, onToggleActive }: Props) {
       <td className="px-4 py-3">
         <button
           onClick={toggle}
-          className={`text-xs px-3 py-1 rounded-full font-medium ${
+          className={`text-xs px-3 py-1 rounded-full font-semibold ${
             product.isActive
-              ? 'bg-green-100 text-green-700 hover:bg-green-200'
-              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200'
+              : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
           }`}
         >
           {product.isActive ? '上架中' : '已下架'}

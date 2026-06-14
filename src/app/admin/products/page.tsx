@@ -19,18 +19,18 @@ export default async function ProductsPage() {
 
   return (
     <div>
-      <h1 className="text-xl font-bold mb-6">商品管理</h1>
-      <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
+      <h1 className="text-xl font-bold text-slate-900 mb-6">商品管理</h1>
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 border-b">
+          <thead className="bg-slate-50 border-b border-slate-200">
             <tr>
-              <th className="text-left px-4 py-3 font-medium text-gray-800">商品名稱</th>
-              <th className="text-left px-4 py-3 font-medium text-gray-800">價格（元）</th>
-              <th className="text-left px-4 py-3 font-medium text-gray-800">狀態</th>
+              <th className="text-left px-4 py-3 font-semibold text-slate-700">商品名稱</th>
+              <th className="text-left px-4 py-3 font-semibold text-slate-700">價格（元）</th>
+              <th className="text-left px-4 py-3 font-semibold text-slate-700">狀態</th>
               <th className="px-4 py-3" />
             </tr>
           </thead>
-          <tbody className="divide-y">
+          <tbody className="divide-y divide-slate-100">
             {products.map((p) => (
               <ProductRow
                 key={p.id}
@@ -42,7 +42,7 @@ export default async function ProductsPage() {
           </tbody>
         </table>
         {products.length === 0 && (
-          <p className="text-center text-gray-400 py-12">尚無商品</p>
+          <p className="text-center text-slate-500 py-12">尚無商品</p>
         )}
       </div>
     </div>

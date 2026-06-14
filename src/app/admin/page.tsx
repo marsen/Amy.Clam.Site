@@ -22,12 +22,12 @@ export default async function AdminDashboard() {
 
   return (
     <div>
-      <h1 className="text-xl font-bold mb-6">總覽</h1>
+      <h1 className="text-xl font-bold text-slate-900 mb-6">總覽</h1>
       <div className="grid grid-cols-3 gap-4">
         {cards.map((c) => (
-          <Link key={c.label} href={c.href} className="bg-white rounded-xl p-6 shadow-sm border hover:shadow-md transition-shadow">
-            <p className="text-sm text-gray-700">{c.label}</p>
-            <p className="text-3xl font-bold mt-2">{c.value}</p>
+          <Link key={c.label} href={c.href} className="bg-white rounded-xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+            <p className="text-sm font-medium text-slate-600">{c.label}</p>
+            <p className="text-3xl font-bold text-slate-900 mt-2">{c.value}</p>
           </Link>
         ))}
       </div>
