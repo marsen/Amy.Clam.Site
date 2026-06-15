@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amy 蛤蜊選物 — 使用手冊</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+      background: #fff;
+      color: #1e293b;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    /* ── 封面 ── */
+    .cover {
+      background: linear-gradient(160deg, #1e3a5f 0%, #0f172a 100%);
+      color: #fff;
+      padding: 72px 56px 60px;
+      min-height: 260px;
+    }
+    .cover-top { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
+    .cover-icon { font-size: 48px; }
+    .cover h1 { font-size: 32px; font-weight: 800; letter-spacing: 1px; }
+    .cover .doc-type {
+      display: inline-block;
+      background: #e8622a;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      padding: 3px 12px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    .cover p { color: #93c5fd; font-size: 14px; margin-top: 6px; }
+    .cover .meta { margin-top: 28px; font-size: 12px; color: #475569; }
+
+    /* ── 頁面 ── */
+    .page { max-width: 780px; margin: 0 auto; padding: 48px 40px; }
+
+    /* ── 章節標題 ── */
+    .chapter {
+      border-left: 4px solid #e8622a;
+      padding-left: 14px;
+      margin: 44px 0 20px;
+    }
+    .chapter-num { font-size: 11px; font-weight: 700; color: #e8622a; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2px; }
+    .chapter h2 { font-size: 20px; font-weight: 800; color: #0f172a; }
+
+    /* ── 步驟 ── */
+    .steps { display: flex; flex-direction: column; gap: 12px; margin: 16px 0; }
+    .step {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 14px 16px;
+      border: 1px solid #e2e8f0;
+    }
+    .step-num {
+      background: #1e3a5f;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-body { flex: 1; }
+    .step-title { font-weight: 700; color: #0f172a; font-size: 14px; margin-bottom: 3px; }
+    .step-desc { font-size: 13px; color: #475569; line-height: 1.6; }
+    .step-link { font-size: 12px; color: #e8622a; font-family: monospace; margin-top: 4px; display: block; font-weight: 600; }
+
+    /* ── 提示框 ── */
+    .tip {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #14532d;
+      margin: 12px 0;
+    }
+    .warn {
+      background: #fffbeb;
+      border: 1px solid #fde047;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #713f12;
+      margin: 12px 0;
+    }
+    .danger {
+      background: #fef2f2;
+      border: 1px solid #fca5a5;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #7f1d1d;
+      margin: 12px 0;
+    }
+
+    /* ── 帳號資訊框 ── */
+    .info-box {
+      background: #1e3a5f;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 16px 0;
+      color: #fff;
+    }
+    .info-box .label { font-size: 11px; color: #93c5fd; letter-spacing: 2px; font-weight: 700; margin-bottom: 12px; text-transform: uppercase; }
+    .info-row { display: flex; gap: 12px; align-items: baseline; margin: 6px 0; font-size: 13px; }
+    .info-key { color: #93c5fd; min-width: 72px; flex-shrink: 0; }
+    .info-val { color: #fbbf24; font-weight: 700; font-family: monospace; word-break: break-all; }
+    .info-val a { color: #fbbf24; text-decoration: underline; }
+
+    /* ── 費用表 ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 13px;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    thead { background: #1e3a5f; color: #fff; }
+    th { padding: 10px 14px; text-align: left; font-weight: 600; font-size: 12px; }
+    td { padding: 10px 14px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    .tag-free { color: #15803d; font-weight: 700; }
+    .tag-cond { color: #b45309; font-weight: 700; }
+    .tag-paid { color: #b91c1c; font-weight: 700; }
+    .note-text { color: #64748b; font-size: 12px; margin-top: 3px; }
+
+    /* ── 兩欄 ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+    .mini-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .mini-card h3 { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+    .mini-card p { font-size: 12px; color: #475569; }
+
+    /* ── 清單 ── */
+    .check-list { list-style: none; margin: 12px 0; }
+    .check-list li { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; padding: 5px 0; color: #1e293b; }
+    .check-list li span { flex-shrink: 0; }
+
+    hr { border: none; border-top: 1px solid #e2e8f0; margin: 40px 0; }
+
+    a { color: #e8622a; }
+
+    @media print {
+      body { background: #fff; }
+      .page { padding: 32px 40px; }
+      .chapter { page-break-inside: avoid; }
+      .step { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── 封面 ── -->
+<div class="cover">
+  <div class="cover-top">
+    <div class="cover-icon">🐚</div>
+    <div>
+      <span class="doc-type">User Manual</span>
+      <h1>Amy 蛤蜊選物<br/>使用手冊</h1>
+    </div>
+  </div>
+  <p>本手冊說明客戶下單流程、管理後台操作方式，以及平台費用的完整條件。</p>
+  <div class="meta">版本 1.0 · 2026 · amy-clam-site.vercel.app</div>
+</div>
+
+<div class="page">
+
+  <!-- ════ 1. 快速起步 ════ -->
+  <div class="chapter">
+    <div class="chapter-num">Chapter 1</div>
+    <h2>客戶如何開始使用</h2>
+  </div>
+
+  <div class="info-box">
+    <div class="label">LINE 官方帳號</div>
+    <div class="info-row"><span class="info-key">帳號名稱</span><span class="info-val">Amy 蛤蜊選物</span></div>
+    <div class="info-row"><span class="info-key">LINE ID</span><span class="info-val">@908srkuq</span></div>
+    <div class="info-row"><span class="info-key">加入連結</span><span class="info-val"><a href="https://line.me/R/ti/p/@908srkuq">https://line.me/R/ti/p/@908srkuq</a></span></div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">掃 QR code 加 Amy 為 LINE 好友</div>
+        <div class="step-desc">打開 LINE → 掃一掃 → 掃描 Amy 蛤蜊選物的 QR code，點「加入好友」。</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">點聊天室底部的「立即訂購」按鈕</div>
+        <div class="step-desc">加入好友後，聊天室底部會出現選單。點「立即訂購」，系統會在 LINE 內開啟購物頁面。</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">選商品、填取貨資料、送出訂單</div>
+        <div class="step-desc">頁面內可瀏覽商品、查看今日天氣、選擇取貨地點與時段，填寫姓名與手機後送出。</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">收到訂單確認訊息</div>
+        <div class="step-desc">下單成功後，LINE 聊天室會自動出現訂單確認訊息，包含取貨地點、時間與金額。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip">💡 也可以直接用瀏覽器開啟 <a href="https://amy-clam-site.vercel.app">amy-clam-site.vercel.app</a>，不需要透過 LINE，但訂單確認通知只會在 LINE 內顯示。</div>
+
+  <hr />
+
+  <!-- ════ 2. 取貨說明 ════ -->
+  <div class="chapter">
+    <div class="chapter-num">Chapter 2</div>
+    <h2>取貨地點與時間</h2>
+  </div>
+
+  <div class="two-col">
+    <div class="mini-card">
+      <h3>🏡 新店取貨</h3>
+      <p>時段：<strong>08:00 – 12:00</strong><br/>可選時間：08:00 / 09:00 / 10:00 / 11:00 / 12:00</p>
+    </div>
+    <div class="mini-card">
+      <h3>🏙️ 內湖取貨</h3>
+      <p>時段：<strong>15:30 – 18:30</strong><br/>可選時間：15:30 / 16:00 / 16:30 / 17:00 / 17:30 / 18:00 / 18:30</p>
+    </div>
+  </div>
+
+  <div class="warn">⚠️ 目前僅支援自取，不提供宅配服務。取貨日期請選擇明天（含）以後的日期。</div>
+
+  <hr />
+
+  <!-- ════ 3. 查詢訂單 ════ -->
+  <div class="chapter">
+    <div class="chapter-num">Chapter 3</div>
+    <h2>查詢歷史訂單</h2>
+  </div>
+
+  <p style="margin-bottom:12px; color:#475569;">客戶可用手機號碼查詢所有歷史訂單：</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">開啟訂單查詢頁面</div>
+        <div class="step-desc">購物頁面下方有「查詢訂單」連結，或直接開啟：</div>
+        <a class="step-link" href="https://amy-clam-site.vercel.app/orders">amy-clam-site.vercel.app/orders</a>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">輸入手機號碼查詢</div>
+        <div class="step-desc">填入下單時使用的手機號碼（09xxxxxxxx），即可看到所有歷史訂單與狀態。</div>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- ════ 4. 管理後台 ════ -->
+  <div class="chapter">
+    <div class="chapter-num">Chapter 4</div>
+    <h2>管理後台操作（Amy 專用）</h2>
+  </div>
+
+  <div class="info-box">
+    <div class="label">後台登入資訊</div>
+    <div class="info-row"><span class="info-key">網址</span><span class="info-val"><a href="https://amy-clam-site.vercel.app/admin">amy-clam-site.vercel.app/admin</a></span></div>
+    <div class="info-row"><span class="info-key">帳號</span><span class="info-val">【正式上線前請更換】</span></div>
+    <div class="info-row"><span class="info-key">密碼</span><span class="info-val">【正式上線前請更換】</span></div>
+  </div>
+
+  <div class="danger">🔒 帳號密碼請勿外洩。後台可存取所有客戶資料與訂單，請妥善保管。</div>
+
+  <div class="steps" style="margin-top:16px;">
+    <div class="step">
+      <div class="step-num">A</div>
+      <div class="step-body">
+        <div class="step-title">商品管理</div>
+        <div class="step-desc">點左上「商品管理」。可點擊價格欄位直接修改售價，或點狀態按鈕切換上架 / 下架。變更<strong>即時生效</strong>，客戶重新整理頁面即可看到更新。</div>
+        <a class="step-link" href="https://amy-clam-site.vercel.app/admin/products">amy-clam-site.vercel.app/admin/products</a>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">B</div>
+      <div class="step-body">
+        <div class="step-title">訂單列表</div>
+        <div class="step-desc">查看所有訂單，可依「待取貨 / 已取貨 / 已取消」篩選。右側下拉選單可直接更新訂單狀態。</div>
+        <a class="step-link" href="https://amy-clam-site.vercel.app/admin/orders">amy-clam-site.vercel.app/admin/orders</a>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">C</div>
+      <div class="step-body">
+        <div class="step-title">銷售報表</div>
+        <div class="step-desc">選擇日期區間，查看每日營收折線圖與各商品銷售數量彙總。預設顯示近 30 天。</div>
+        <a class="step-link" href="https://amy-clam-site.vercel.app/admin/reports">amy-clam-site.vercel.app/admin/reports</a>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- ════ 5. 費用說明 ════ -->
+  <div class="chapter">
+    <div class="chapter-num">Chapter 5</div>
+    <h2>費用說明</h2>
+  </div>
+
+  <div class="warn">⚠️ 下表所列「免費」均為各平台免費方案的條件，超出使用量或違反條款時將產生費用。請詳閱各平台條款後再行判斷。</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>服務</th>
+        <th>目前費用</th>
+        <th>免費條件 / 但書</th>
+        <th>超出後費用</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Vercel</strong><br/><span class="note-text">網站主機</span></td>
+        <td class="tag-free">免費</td>
+        <td>Hobby Plan：每月 100 GB 頻寬、6,000 分鐘 build 時間<br/><span class="note-text">頁面訪問量小的站通常不會超出</span></td>
+        <td>Pro Plan 起 US$20/月</td>
+      </tr>
+      <tr>
+        <td><strong>Neon PostgreSQL</strong><br/><span class="note-text">資料庫</span></td>
+        <td class="tag-free">免費</td>
+        <td>Free Plan：0.5 GB 儲存、190 小時計算時間/月<br/><span class="note-text">商品＋訂單資料量遠低於上限</span></td>
+        <td>Launch Plan 起 US$19/月</td>
+      </tr>
+      <tr>
+        <td><strong>LINE 官方帳號</strong><br/><span class="note-text">客戶互動 / Rich Menu</span></td>
+        <td class="tag-cond">條件免費</td>
+        <td>每月免費傳送 <strong>200 則訊息</strong>給所有好友（廣播）<br/><span class="note-text">下單後的個別通知（LIFF sendMessages）不計入廣播額度，不受限制</span></td>
+        <td>輕用量方案 NT$888/月（6,000 則）起</td>
+      </tr>
+      <tr>
+        <td><strong>LINE LIFF</strong><br/><span class="note-text">購物頁面框架</span></td>
+        <td class="tag-free">免費</td>
+        <td>無使用量限制</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><strong>CWA 天氣 API</strong><br/><span class="note-text">氣象局開放資料</span></td>
+        <td class="tag-cond">條件免費</td>
+        <td>授權條款允許非商業研究使用。<strong>本平台屬商業電商用途</strong>，正式上線前須向中央氣象署確認是否需要商業授權</td>
+        <td>商業授權費用未公告，需洽詢氣象署</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="danger">❗ CWA 天氣 API 使用於商業用途前，請先至 <a href="https://opendata.cwa.gov.tw">opendata.cwa.gov.tw</a> 確認最新授權條款，或主動聯絡中央氣象署取得書面授權，以避免法律風險。</div>
+
+  <hr />
+
+  <!-- ════ 6. 上線前清單 ════ -->
+  <div class="chapter">
+    <div class="chapter-num">Chapter 6</div>
+    <h2>正式對外前的準備清單</h2>
+  </div>
+
+  <ul class="check-list">
+    <li><span>☐</span> 確認並輸入真實商品名稱與價格</li>
+    <li><span>☐</span> 設定 Amy 的正式登入帳號與密碼（請勿使用預設測試帳密）</li>
+    <li><span>☐</span> 更新 LINE OA 大頭貼與帳號說明文字</li>
+    <li><span>☐</span> 確認 CWA 天氣 API 商業使用授權</li>
+    <li><span>☐</span> 對外公開 LINE OA（讓非測試者也能搜尋與加入）</li>
+    <li><span>☐</span> 實際走一次完整下單流程，確認訂單通知正常</li>
+  </ul>
+
+</div>
+</body>
+</html>
