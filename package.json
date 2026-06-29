@@ -2,11 +2,13 @@
   "name": "amy-clam-site",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@10.29.2",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "type-check": "tsc --noEmit",
     "seed": "npx ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts"
   },
   "prisma": {
