@@ -1,19 +1,21 @@
-import { prisma } from '@/infrastructure/prisma/client'
+import { db } from '@/infrastructure/db/client'
+import { product } from '@/infrastructure/db/schema'
+import { eq, asc } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { ProductRow } from './ProductRow'
 
 export default async function ProductsPage() {
-  const products = await prisma.product.findMany({ orderBy: { createdAt: 'asc' } })
+  const products = await db.select().from(product).orderBy(asc(product.createdAt))
 
   async function updatePrice(id: string, price: number) {
     'use server'
-    await prisma.product.update({ where: { id }, data: { price } })
+    await db.update(product).set({ price }).where(eq(product.id, id))
     revalidatePath('/admin/products')
   }
 
   async function toggleActive(id: string, isActive: boolean) {
     'use server'
-    await prisma.product.update({ where: { id }, data: { isActive } })
+    await db.update(product).set({ isActive }).where(eq(product.id, id))
     revalidatePath('/admin/products')
   }
 

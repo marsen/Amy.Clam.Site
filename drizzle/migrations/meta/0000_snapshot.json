@@ -1,0 +1,370 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public._prisma_migrations": {
+      "name": "_prisma_migrations",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(36)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "checksum": {
+          "name": "checksum",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "finished_at": {
+          "name": "finished_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "migration_name": {
+          "name": "migration_name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "logs": {
+          "name": "logs",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rolled_back_at": {
+          "name": "rolled_back_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "started_at": {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "applied_steps_count": {
+          "name": "applied_steps_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.Order": {
+      "name": "Order",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "customerName": {
+          "name": "customerName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "customerPhone": {
+          "name": "customerPhone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pickupLocation": {
+          "name": "pickupLocation",
+          "type": "PickupLocation",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pickupDate": {
+          "name": "pickupDate",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pickupTime": {
+          "name": "pickupTime",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "OrderStatus",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'PENDING'"
+        },
+        "totalAmount": {
+          "name": "totalAmount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "weatherSnapshot": {
+          "name": "weatherSnapshot",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp(3)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      },
+      "indexes": {
+        "Order_createdAt_idx": {
+          "name": "Order_createdAt_idx",
+          "columns": [
+            {
+              "expression": "createdAt",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "timestamp_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "Order_customerPhone_idx": {
+          "name": "Order_customerPhone_idx",
+          "columns": [
+            {
+              "expression": "customerPhone",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "Order_status_idx": {
+          "name": "Order_status_idx",
+          "columns": [
+            {
+              "expression": "status",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "enum_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.OrderItem": {
+      "name": "OrderItem",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "orderId": {
+          "name": "orderId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "productId": {
+          "name": "productId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "productName": {
+          "name": "productName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "productPrice": {
+          "name": "productPrice",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quantity": {
+          "name": "quantity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "subtotal": {
+          "name": "subtotal",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "OrderItem_orderId_fkey": {
+          "name": "OrderItem_orderId_fkey",
+          "tableFrom": "OrderItem",
+          "tableTo": "Order",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "orderId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        },
+        "OrderItem_productId_fkey": {
+          "name": "OrderItem_productId_fkey",
+          "tableFrom": "OrderItem",
+          "tableTo": "Product",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "productId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.Product": {
+      "name": "Product",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "price": {
+          "name": "price",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "imageUrl": {
+          "name": "imageUrl",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "isActive": {
+          "name": "isActive",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp(3)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp(3)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.OrderStatus": {
+      "name": "OrderStatus",
+      "values": [
+        "PENDING",
+        "COMPLETED",
+        "CANCELLED"
+      ],
+      "schema": "public"
+    },
+    "public.PickupLocation": {
+      "name": "PickupLocation",
+      "values": [
+        "SHINDIAN",
+        "NEIHU"
+      ],
+      "schema": "public"
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {}
+  }
+}

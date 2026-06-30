@@ -1,6 +1,8 @@
-import { prisma } from '@/infrastructure/prisma/client'
+import { db } from '@/infrastructure/db/client'
+import { order } from '@/infrastructure/db/schema'
+import type { OrderStatus, PickupLocation } from '@/infrastructure/db/schema'
+import { eq, desc } from 'drizzle-orm'
 import Link from 'next/link'
-import { OrderStatus, PickupLocation } from '@prisma/client'
 import { StatusSelect } from './StatusSelect'
 
 const statusLabel: Record<OrderStatus, string> = {
@@ -20,21 +22,22 @@ const locationLabel: Record<PickupLocation, string> = {
   NEIHU: '內湖',
 }
 
+const validStatuses = ['PENDING', 'COMPLETED', 'CANCELLED'] as const
+
 export default async function OrdersPage({
   searchParams,
 }: {
   searchParams: Promise<{ status?: string }>
 }) {
   const { status } = await searchParams
-  const where =
-    status && Object.keys(OrderStatus).includes(status)
-      ? { status: status as OrderStatus }
-      : undefined
+  const validStatus = status && (validStatuses as readonly string[]).includes(status)
+    ? status as OrderStatus
+    : undefined
 
-  const orders = await prisma.order.findMany({
-    where,
-    include: { items: true },
-    orderBy: { createdAt: 'desc' },
+  const orders = await db.query.order.findMany({
+    where: validStatus ? eq(order.status, validStatus) : undefined,
+    with: { items: true },
+    orderBy: [desc(order.createdAt)],
   })
 
   return (

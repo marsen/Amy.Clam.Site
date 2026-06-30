@@ -1,5 +1,7 @@
 import Link from 'next/link'
-import { prisma } from '@/infrastructure/prisma/client'
+import { db } from '@/infrastructure/db/client'
+import { product } from '@/infrastructure/db/schema'
+import { eq, asc } from 'drizzle-orm'
 
 async function getWeather() {
   try {
@@ -33,7 +35,7 @@ function WeatherCard({ label, location, data }: {
 
 export default async function StorePage() {
   const [products, weather] = await Promise.all([
-    prisma.product.findMany({ where: { isActive: true }, orderBy: { createdAt: 'asc' } }),
+    db.select().from(product).where(eq(product.isActive, true)).orderBy(asc(product.createdAt)),
     getWeather(),
   ])
 
