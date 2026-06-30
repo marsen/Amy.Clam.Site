@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/infrastructure/prisma/client'
-import { PickupLocation, OrderStatus } from '@prisma/client'
+import { db } from '@/infrastructure/db/client'
+import { order, orderItem, product } from '@/infrastructure/db/schema'
+import type { PickupLocation } from '@/infrastructure/db/schema'
+import { eq, inArray, and, desc } from 'drizzle-orm'
 import { z } from 'zod'
+import { randomUUID } from 'crypto'
 
 const PICKUP_SLOTS: Record<PickupLocation, string[]> = {
   SHINDIAN: ['08:00', '09:00', '10:00', '11:00', '12:00'],
@@ -32,9 +35,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: '無效的取貨時間' }, { status: 400 })
   }
 
-  const products = await prisma.product.findMany({
-    where: { id: { in: items.map(i => i.productId) }, isActive: true },
-  })
+  const products = await db.select().from(product).where(
+    and(inArray(product.id, items.map(i => i.productId)), eq(product.isActive, true))
+  )
   if (products.length !== items.length) {
     return NextResponse.json({ error: '部分商品不存在或已下架' }, { status: 400 })
   }
@@ -56,26 +59,32 @@ export async function POST(req: NextRequest) {
   })
   const totalAmount = orderItems.reduce((s, i) => s + i.subtotal, 0)
 
-  const order = await prisma.order.create({
-    data: {
-      customerName, customerPhone, pickupLocation, pickupDate, pickupTime,
-      status: OrderStatus.PENDING, totalAmount, weatherSnapshot,
-      items: { create: orderItems },
-    },
-    include: { items: true },
+  const orderId = randomUUID()
+  await db.insert(order).values({
+    id: orderId,
+    customerName, customerPhone, pickupLocation, pickupDate, pickupTime,
+    status: 'PENDING', totalAmount, weatherSnapshot,
+  })
+  await db.insert(orderItem).values(
+    orderItems.map(item => ({ id: randomUUID(), orderId, ...item }))
+  )
+
+  const createdOrder = await db.query.order.findFirst({
+    where: eq(order.id, orderId),
+    with: { items: true },
   })
 
-  return NextResponse.json(order, { status: 201 })
+  return NextResponse.json(createdOrder, { status: 201 })
 }
 
 export async function GET(req: NextRequest) {
   const phone = req.nextUrl.searchParams.get('phone')
   if (!phone) return NextResponse.json({ error: '請提供電話' }, { status: 400 })
 
-  const orders = await prisma.order.findMany({
-    where: { customerPhone: phone },
-    include: { items: true },
-    orderBy: { createdAt: 'desc' },
+  const orders = await db.query.order.findMany({
+    where: eq(order.customerPhone, phone),
+    with: { items: true },
+    orderBy: [desc(order.createdAt)],
   })
   return NextResponse.json(orders)
 }

@@ -1,4 +1,6 @@
-import { prisma } from '@/infrastructure/prisma/client'
+import { db } from '@/infrastructure/db/client'
+import { order } from '@/infrastructure/db/schema'
+import { ne, gte, lte, and } from 'drizzle-orm'
 import { RevenueChart } from './RevenueChart'
 
 function getDefaultRange() {
@@ -21,19 +23,20 @@ export default async function ReportsPage({
   const fromDate = new Date(`${from}T00:00:00`)
   const toDate = new Date(`${to}T23:59:59`)
 
-  const orders = await prisma.order.findMany({
-    where: {
-      status: { not: 'CANCELLED' },
-      createdAt: { gte: fromDate, lte: toDate },
-    },
-    include: { items: true },
+  const orders = await db.query.order.findMany({
+    where: and(
+      ne(order.status, 'CANCELLED'),
+      gte(order.createdAt, fromDate.toISOString()),
+      lte(order.createdAt, toDate.toISOString())
+    ),
+    with: { items: true },
   })
 
   const totalRevenue = orders.reduce((s, o) => s + o.totalAmount, 0)
 
   const dailyMap = new Map<string, number>()
   for (const o of orders) {
-    const d = o.createdAt.toISOString().slice(0, 10)
+    const d = o.createdAt.slice(0, 10)
     dailyMap.set(d, (dailyMap.get(d) ?? 0) + o.totalAmount)
   }
   const dailyRevenue = Array.from(dailyMap.entries())

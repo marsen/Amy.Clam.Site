@@ -1,11 +1,13 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@/infrastructure/prisma/client'
+import { db } from '@/infrastructure/db/client'
+import { product } from '@/infrastructure/db/schema'
+import { eq, asc } from 'drizzle-orm'
 
 export async function GET() {
-  const products = await prisma.product.findMany({
-    where: { isActive: true },
-    orderBy: { createdAt: 'asc' },
-    select: { id: true, name: true, price: true },
-  })
+  const products = await db.select({
+    id: product.id,
+    name: product.name,
+    price: product.price,
+  }).from(product).where(eq(product.isActive, true)).orderBy(asc(product.createdAt))
   return NextResponse.json(products)
 }

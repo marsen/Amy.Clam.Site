@@ -1,7 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import type { Product } from '@prisma/client'
+import type { InferSelectModel } from 'drizzle-orm'
+import type { product } from '@/infrastructure/db/schema'
+
+type Product = InferSelectModel<typeof product>
 
 interface Props {
   product: Product

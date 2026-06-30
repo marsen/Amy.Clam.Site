@@ -1,5 +1,7 @@
 import Link from 'next/link'
-import { prisma } from '@/infrastructure/prisma/client'
+import { db } from '@/infrastructure/db/client'
+import { order } from '@/infrastructure/db/schema'
+import { eq } from 'drizzle-orm'
 import { LiffOrderSuccess } from '@/components/LiffOrderSuccess'
 
 export default async function SuccessPage({
@@ -8,17 +10,17 @@ export default async function SuccessPage({
   searchParams: Promise<{ id?: string }>
 }) {
   const { id } = await searchParams
-  const order = id ? await prisma.order.findUnique({ where: { id } }) : null
+  const found = id ? await db.query.order.findFirst({ where: eq(order.id, id) }) : null
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[70vh] px-4 text-center">
-      {order && (
+      {found && (
         <LiffOrderSuccess
-          orderId={order.id}
-          location={order.pickupLocation}
-          date={order.pickupDate}
-          time={order.pickupTime}
-          total={order.totalAmount}
+          orderId={found.id}
+          location={found.pickupLocation}
+          date={found.pickupDate}
+          time={found.pickupTime}
+          total={found.totalAmount}
         />
       )}
       <div className="bg-white rounded-3xl shadow-sm border border-orange-50 p-8 w-full max-w-sm">
@@ -26,11 +28,11 @@ export default async function SuccessPage({
           <span className="text-3xl">✅</span>
         </div>
         <h1 className="text-xl font-bold text-[#1A1A1A] mb-2">下單成功！</h1>
-        {order && (
+        {found && (
           <div className="text-sm text-gray-500 mb-4 space-y-1">
-            <p className="font-mono text-xs bg-gray-100 px-3 py-1 rounded-lg inline-block"># {order.id.slice(0, 8)}</p>
-            <p className="mt-2">{order.pickupLocation === 'SHINDIAN' ? '新店' : '內湖'} · {order.pickupDate} {order.pickupTime}</p>
-            <p className="font-bold text-[#E8622A]">NT$ {order.totalAmount}</p>
+            <p className="font-mono text-xs bg-gray-100 px-3 py-1 rounded-lg inline-block"># {found.id.slice(0, 8)}</p>
+            <p className="mt-2">{found.pickupLocation === 'SHINDIAN' ? '新店' : '內湖'} · {found.pickupDate} {found.pickupTime}</p>
+            <p className="font-bold text-[#E8622A]">NT$ {found.totalAmount}</p>
           </div>
         )}
         <p className="text-sm text-gray-500 mb-6 leading-relaxed">

@@ -1,23 +1,23 @@
 import Link from 'next/link'
-import { prisma } from '@/infrastructure/prisma/client'
+import { db } from '@/infrastructure/db/client'
+import { order, product } from '@/infrastructure/db/schema'
+import { eq, count, sum, ne, gte, and } from 'drizzle-orm'
 
 export default async function AdminDashboard() {
-  const [productCount, pendingCount, todayRevenue] = await Promise.all([
-    prisma.product.count({ where: { isActive: true } }),
-    prisma.order.count({ where: { status: 'PENDING' } }),
-    prisma.order.aggregate({
-      _sum: { totalAmount: true },
-      where: {
-        status: { not: 'CANCELLED' },
-        createdAt: { gte: new Date(new Date().setHours(0, 0, 0, 0)) },
-      },
-    }),
+  const todayStart = new Date(new Date().setHours(0, 0, 0, 0)).toISOString()
+
+  const [productResult, pendingResult, revenueResult] = await Promise.all([
+    db.select({ count: count() }).from(product).where(eq(product.isActive, true)),
+    db.select({ count: count() }).from(order).where(eq(order.status, 'PENDING')),
+    db.select({ total: sum(order.totalAmount) }).from(order).where(
+      and(ne(order.status, 'CANCELLED'), gte(order.createdAt, todayStart))
+    ),
   ])
 
   const cards = [
-    { label: '上架商品', value: productCount, href: '/admin/products' },
-    { label: '待取貨訂單', value: pendingCount, href: '/admin/orders' },
-    { label: '今日營收', value: `$${todayRevenue._sum.totalAmount ?? 0}`, href: '/admin/reports' },
+    { label: '上架商品', value: productResult[0].count, href: '/admin/products' },
+    { label: '待取貨訂單', value: pendingResult[0].count, href: '/admin/orders' },
+    { label: '今日營收', value: `$${revenueResult[0].total ?? 0}`, href: '/admin/reports' },
   ]
 
   return (

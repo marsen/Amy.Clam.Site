@@ -1,6 +1,6 @@
 'use client'
 
-import { OrderStatus } from '@prisma/client'
+import type { OrderStatus } from './actions'
 import { updateOrderStatus } from './actions'
 
 const statusLabel: Record<OrderStatus, string> = {
